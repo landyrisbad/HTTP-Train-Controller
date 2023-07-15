@@ -1,0 +1,84 @@
+body {
+    user-select: none;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.image-button {
+    border:  none;
+    background-color: rgba(0, 0, 0, 0);
+}
+.image-button>img {
+    width: 50px;
+    border-radius: 5px;
+}
+.image-button:hover>img {
+    opacity: 75%;
+}
+
+#increase {
+    float: right;
+}
+#decrease {
+    float: left;
+}
+
+#button-control {
+    width: 300px;
+}
+
+#dial {
+    transform: rotate(210deg);
+}
+
+#info {
+    display: inline-block;
+}
+
+.switch { 
+    position : relative ;
+    display : inline-block;
+    width : 60px;
+    height : 25px;
+    border: 2px solid;
+}
+
+.switch:hover {
+    opacity: 0.75;
+}
+.switch::after:hover {
+    opacity: 0.75;
+}
+
+.switch::after {
+    content: '';
+    position: absolute;
+    width: 23px;
+    height: 23px;
+    background-color: black;
+    top: 1px; 
+    left: 1px;
+}
+
+.checkbox:checked + .switch::after {
+    left : 36px; 
+}
+  
+.checkbox { 
+    display : none;
+}
+
+#direction {
+    width: 75px;
+    height: 37.5px;
+    display: inline;
+}
+
+#direction-label {
+    display: inline;
+    top: 0;
+}
+
+#direction-control {
+    padding: 0;
+    height: 60px;
+}
