@@ -7,6 +7,7 @@ var dial;
 var speedInfo;
 var directionSwitch;
 var directionValue = false;
+var stop;
 
 document.addEventListener("keydown", function (event) {
     if (event.key == "ArrowLeft") { 
@@ -22,6 +23,11 @@ document.addEventListener("keydown", function (event) {
 
 function setNonDraggable (image) {
     image.draggable = false;
+}
+
+function eSTOP () {
+    speedVal = 0;
+    changeSpeed(null, speedVal);
 }
 
 function onload () {
