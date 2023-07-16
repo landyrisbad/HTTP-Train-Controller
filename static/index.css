@@ -3,14 +3,23 @@ body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-.image-button {
-    border:  none;
-    background-color: rgba(0, 0, 0, 0);
+#speed-control {
+    text-align: center;
+    width: 300px;
+    display: inline-block;
 }
-.image-button>img {
+
+#direction-control {
+    position: absolute;
+    display: inline;
+    text-align: center;
+}
+
+.button-img {
     width: 50px;
+    border-radius: 5px;
 }
-.image-button:hover>img {
+.button-img:hover {
     opacity: 75%;
 }
 
@@ -22,7 +31,7 @@ body {
 }
 
 #button-control {
-    width: 300px;
+    width: 100%;
 }
 
 #dial {
@@ -74,11 +83,6 @@ body {
 
 #direction:hover {
     opacity: 75%;
-}
-
-#direction-label {
-    display: inline;
-    top: 0;
 }
 
 #direction-control {

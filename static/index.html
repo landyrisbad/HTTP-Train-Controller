@@ -6,23 +6,23 @@
     <script src="index.js"></script>
   </head>
   <body onload="onload()">
-    <center id="controller">
-      <div id="direction-control">
-        <h3 id="direction-label">Direction: </h3>
-        <img src="direction-on.png" id="direction" />
-      </div>
+    <div id="speed-control">
       <div id="speed">
         <div id="knob">
           <img src="dial.png" id="dial"/>
         </div>
         <div id="button-control">
-            <button id="decrease" class="image-button"><img src="decrease.png"/></button>
+            <img src="decrease.png" class="button-img" id="decrease"/>
             <h2 id="info">Speed: <span id="speedVal">0</span>%</h2>
-            <button id="increase" class="image-button "><img src="increase.png"/></button>
+            <img src="increase.png" class="button-img" id="increase" />
         </div>
       </div>
       <div><button id="STOP" onclick="eSTOP()">STOP</button></div>
-    </center>
+    </div>
+    <div id="direction-control">
+      <h3 id="direction-label">Direction: </h3>
+      <img src="direction-on.png" id="direction" />
+    </div>
 
     <script></script>
   </body>

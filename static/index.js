@@ -7,9 +7,11 @@ var dial;
 var speedInfo;
 var directionSwitch;
 var stop;
+var directionVal;
+var canSwitch = false;
+var doChangeAngle = false;
 
 document.addEventListener("keydown", function (event) {
-    console.log(event.key);
     if (event.key == "ArrowDown") { 
         changeSpeed(null, -1);
     }
@@ -36,11 +38,50 @@ function eSTOP () {
     changeSpeed(null, speedVal);
 }
 
+function toRadians(degrees) {
+    return degrees * Math.PI / 180;
+}
+function toDegrees(radians) {
+    return radians * 180 / Math.PI;
+}
+
+function calcDialAngle (event) {
+    if (!doChangeAngle) { return; }
+
+    var lat2 = toRadians(event.clientX);
+    var long2 = toRadians(event.clientY);
+
+    var dialBoundingBox = document.getElementById("knob").getBoundingClientRect();
+    var lat1 = toRadians(dialBoundingBox.x + dialBoundingBox.width / 2) 
+    var long1 = toRadians(dialBoundingBox.y);
+    console.log(dialBoundingBox.x + dialBoundingBox.width / 2, dialBoundingBox.y);
+    console.log(lat2, long2); 
+
+    var angle = Math.atan2(
+        Math.sin(long2 - long1) * Math.cos(lat2),
+        Math.cos(lat1) * Math.sin(lat2) - Math.sin(lat1) * Math.cos(lat2) * Math.cos(long2 - long1)
+    )
+
+    angle = (toDegrees(angle) + 360) % 360;
+
+    console.log(angle);
+
+    dial.style.transform = "rotate(" + angle + "deg)";
+}
+
 function onload () {
     const images = Array.from(document.getElementsByTagName("img"));
     images.forEach(setNonDraggable)
 
     dial = document.getElementById("dial");
+    /*window.addEventListener("mousemove", calcDialAngle);
+    dial.addEventListener("mousedown", () => {
+        doChangeAngle = true;
+    });
+    window.addEventListener("mouseup", () => {
+        doChangeAngle = false;
+    })*/
+
     speedInfo = document.getElementById("speedVal");
     directionSwitch = document.getElementById("direction");
     directionSwitch.addEventListener("click", setDirection);
@@ -54,7 +95,24 @@ function onload () {
 }
 
 async function setDirection(val) {
+    if (speedVal > 1  && !canSwitch) {
+        if (confirm("It is not advisable to change direction at speed. Do you wish to continue (and ignore future warnings)?")) {
+            canSwitch = true;
+        } else {
+            canSwitch = false;
+        }
+    }
+
+    if (!canSwitch && speed > 2) {
+        return
+    }
+
+    if (typeof val == "object") {
+        val = !directionVal;
+    }
+
     var direction = val ? 1 : 0;
+    directionVal = direction;
 
     if (val) {
         directionSwitch.src = "direction-off.png";
