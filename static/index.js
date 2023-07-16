@@ -6,18 +6,24 @@ var decreaseSpeed;
 var dial;
 var speedInfo;
 var directionSwitch;
-var directionValue = false;
 var stop;
 
 document.addEventListener("keydown", function (event) {
-    if (event.key == "ArrowLeft") { 
+    console.log(event.key);
+    if (event.key == "ArrowDown") { 
         changeSpeed(null, -1);
     }
-    else if (event.key == "ArrowRight") {
+    else if (event.key == "ArrowUp") {
         changeSpeed(null, 1);
     }
-    else if (event.key == "ArrowUp") {
-        setDirection();
+    else if (event.key == "ArrowRight") {
+        setDirection(true);
+    }
+    else if (event.key == "ArrowLeft") {
+        setDirection(false);
+    }
+    else if (event.key == " ") {
+        eSTOP();
     }
 });
 
@@ -38,6 +44,7 @@ function onload () {
     speedInfo = document.getElementById("speedVal");
     directionSwitch = document.getElementById("direction");
     directionSwitch.addEventListener("click", setDirection);
+
     increaseSpeed = document.getElementById("increase");
     decreaseSpeed = document.getElementById("decrease");
     increaseSpeed.addEventListener("click", changeSpeed);
@@ -46,11 +53,10 @@ function onload () {
     decreaseSpeed.speedChangeVal = -1;
 }
 
-async function setDirection() {
-    directionValue = !directionValue;
-    var direction = directionValue ? 1 : 0;
+async function setDirection(val) {
+    var direction = val ? 1 : 0;
 
-    if (directionValue) {
+    if (val) {
         directionSwitch.src = "direction-off.png";
     }
     else {
