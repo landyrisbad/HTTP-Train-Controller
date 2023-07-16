@@ -6,3 +6,4 @@ using a shitty web server built by yours truly for micropython - likely not suit
 TODO:
 create front end for point/signal control etc
 make a better server backend
+might be faster putting all the functions calulating when and what to do on the backend?? - simpler and faster?
