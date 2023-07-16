@@ -64,7 +64,7 @@ async function setDirection(val) {
     }
 
     const setDirection = await fetch(`/direction/${direction}`);
-    console.log(await setDirection.ok());
+    console.log(await setDirection.text());
 }
 
 async function changeSpeed (event, setValue = 0) {
@@ -85,7 +85,7 @@ async function changeSpeed (event, setValue = 0) {
     dial.style.transform = "rotate(" +  getAngle(speedVal) + "deg)";
 
     const changeSpeed = await fetch(`/speed/${speedVal}`);
-    console.log(await changeSpeed.ok());
+    console.log(await changeSpeed.text());
 } 
 
 function getAngle (val) {
