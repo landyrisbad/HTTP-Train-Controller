@@ -10,4 +10,6 @@ TODO:
 
 -make a better server backend
 
--might be faster putting all the functions calulating when and what to do on the backend?? - simpler and faster?
+-might be faster putting all the functions calulating when and what to do on the backend?? - simpler and faster? - real server library???
+
+-implement automation using js somehwo
