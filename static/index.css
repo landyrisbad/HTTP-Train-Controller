@@ -9,6 +9,12 @@ body {
     display: inline-block;
 }
 
+#control-wrapper {
+    border: 5px solid black;
+    padding: 5px;
+    text-align: center;
+}
+
 #direction-control {
     position: absolute;
     display: inline;
@@ -100,4 +106,11 @@ body {
 #STOP:hover {
     background-color: white;
     color: red;
+}
+
+#set-manual {
+    text-align: center;
+    font-weight: bold;
+    border: 5px solid black;
+    border-bottom: none;
 }

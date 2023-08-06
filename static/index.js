@@ -11,20 +11,24 @@ var directionVal;
 var canSwitch = false;
 var doChangeAngle = false;
 
+var isManual;
+
 document.addEventListener("keydown", function (event) {
-    if (event.key == "ArrowDown") { 
-        changeSpeed(null, -1);
-    }
-    else if (event.key == "ArrowUp") {
-        changeSpeed(null, 1);
-    }
-    else if (event.key == "ArrowRight") {
-        setDirection(true);
-    }
-    else if (event.key == "ArrowLeft") {
-        setDirection(false);
-    }
-    else if (event.key == " ") {
+    if (isManual.checked) {
+        if (event.key == "ArrowDown") { 
+            changeSpeed(null, -1);
+        }
+        else if (event.key == "ArrowUp") {
+            changeSpeed(null, 1);
+        }
+        else if (event.key == "ArrowRight") {
+            setDirection(true);
+        }
+        else if (event.key == "ArrowLeft") {
+            setDirection(false);
+        }
+    }   
+    if (event.key == "Backspace") {
         eSTOP();
     }
 });
@@ -92,6 +96,22 @@ function onload () {
     decreaseSpeed.addEventListener("click", changeSpeed);
     increaseSpeed.speedChangeVal = 1;
     decreaseSpeed.speedChangeVal = -1;
+
+    isManual = document.getElementById("isManual");
+    isManual.addEventListener("change", setManualControls);
+}
+
+function setManualControls () {
+    var val = isManual.checked;
+
+    if (val) {
+        document.getElementById("manual-controls").style.display = "block";
+        document.getElementById("auto-controls").style.display = "none";
+    }
+    else {
+        document.getElementById("manual-controls").style.display = "none";
+        document.getElementById("auto-controls").style.display = "block";
+    }
 }
 
 async function setDirection(val) {
@@ -148,4 +168,9 @@ async function changeSpeed (event, setValue = 0) {
 
 function getAngle (val) {
     return angleZero + val * 30;
+}
+
+async function updateStationLoop (loop) {
+    const status = await fetch(`/autorun/1/${loop}`);
+    console.log(await status.text());
 }

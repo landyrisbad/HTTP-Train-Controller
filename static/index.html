@@ -4,26 +4,38 @@
     <title>Model Railway Controller</title>
     <link rel="stylesheet" href="index.css" />
     <script src="index.js"></script>
+    
   </head>
   <body onload="onload()">
-    <div id="speed-control">
-      <div id="speed">
-        <div id="knob">
-          <img src="dial.png" id="dial"/>
+    <div id="set-manual">
+      <label for="isManual">Manual Control:</label>
+      <input type="checkbox" id="isManual" checked>
+    </div>
+
+    <div id="control-wrapper">
+      <div id="manual-controls">
+        <div id="speed-control">
+          <div id="speed">
+            <div id="knob">
+              <img src="dial.png" id="dial"/>
+            </div>
+            <div id="button-control">
+                <img src="decrease.png" class="button-img" id="decrease"/>
+                <h2 id="info">Speed: <span id="speedVal">0</span>%</h2>
+                <img src="increase.png" class="button-img" id="increase" />
+            </div>
+          </div>
         </div>
-        <div id="button-control">
-            <img src="decrease.png" class="button-img" id="decrease"/>
-            <h2 id="info">Speed: <span id="speedVal">0</span>%</h2>
-            <img src="increase.png" class="button-img" id="increase" />
+        <div id="direction-control">
+          <h3 id="direction-label">Direction: </h3>
+          <img src="direction-on.png" id="direction" />
         </div>
+      </div>
+      <div id="auto-controls" style="display: none;">
+        <p><i>In Progress: come back later</i></p>
       </div>
       <div><button id="STOP" onclick="eSTOP()">STOP</button></div>
     </div>
-    <div id="direction-control">
-      <h3 id="direction-label">Direction: </h3>
-      <img src="direction-on.png" id="direction" />
-    </div>
 
-    <script></script>
   </body>
 </html>
