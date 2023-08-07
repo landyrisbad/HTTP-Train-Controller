@@ -7,12 +7,7 @@
     
   </head>
   <body onload="onload()">
-    <div id="set-manual">
-      <label for="isManual">Manual Control:</label>
-      <input type="checkbox" id="isManual" checked>
-    </div>
-
-    <div id="control-wrapper">
+    <div id="control-wrapper" class="controller">
       <div id="manual-controls">
         <div id="speed-control">
           <div id="speed">
@@ -36,6 +31,11 @@
       </div>
       <div><button id="STOP" onclick="eSTOP()">STOP</button></div>
     </div>
-
+    <div class="controller" id="zone-control">
+    </div>
+    <div id="set-manual" class="controller">
+      <label for="isManual">Manual Control:</label>
+      <input type="checkbox" id="isManual" checked>
+    </div>
   </body>
 </html>

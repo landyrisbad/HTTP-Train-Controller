@@ -10,8 +10,12 @@ var stop;
 var directionVal;
 var canSwitch = false;
 var doChangeAngle = false;
+var controllingZone = 0;
+var zoneDiv;
 
 var isManual;
+
+setInterval(function () { document.activeElement.blur() }, 1);
 
 document.addEventListener("keydown", function (event) {
     if (isManual.checked) {
@@ -28,7 +32,7 @@ document.addEventListener("keydown", function (event) {
             setDirection(false);
         }
     }   
-    if (event.key == "Backspace") {
+    if (event.key == " ") {
         eSTOP();
     }
 });
@@ -78,13 +82,13 @@ function onload () {
     images.forEach(setNonDraggable)
 
     dial = document.getElementById("dial");
-    /*window.addEventListener("mousemove", calcDialAngle);
-    dial.addEventListener("mousedown", () => {
+    window.addEventListener("mousemove", calcDialAngle);
+    /* dial.addEventListener("mousedown", () => {
         doChangeAngle = true;
     });
     window.addEventListener("mouseup", () => {
         doChangeAngle = false;
-    })*/
+    }); */
 
     speedInfo = document.getElementById("speedVal");
     directionSwitch = document.getElementById("direction");
@@ -99,6 +103,9 @@ function onload () {
 
     isManual = document.getElementById("isManual");
     isManual.addEventListener("change", setManualControls);
+
+    zoneDiv = document.getElementById("zone-control")
+    setZones();
 }
 
 function setManualControls () {
@@ -107,10 +114,12 @@ function setManualControls () {
     if (val) {
         document.getElementById("manual-controls").style.display = "block";
         document.getElementById("auto-controls").style.display = "none";
+        zoneDiv.style.display = "block";
     }
     else {
         document.getElementById("manual-controls").style.display = "none";
         document.getElementById("auto-controls").style.display = "block";
+        zoneDiv.style.display = "none";
     }
 }
 
@@ -141,7 +150,7 @@ async function setDirection(val) {
         directionSwitch.src = "direction-on.png";
     }
 
-    const setDirection = await fetch(`/direction/${direction}`);
+    const setDirection = await fetch(`/direction/${controllingZone}/${direction}`);
     console.log(await setDirection.text());
 }
 
@@ -162,7 +171,7 @@ async function changeSpeed (event, setValue = 0) {
     speedInfo.innerHTML = speedVal * 10
     dial.style.transform = "rotate(" +  getAngle(speedVal) + "deg)";
 
-    const changeSpeed = await fetch(`/speed/${speedVal}`);
+    const changeSpeed = await fetch(`/speed/${controllingZone}/${speedVal}`);
     console.log(await changeSpeed.text());
 } 
 
@@ -170,7 +179,36 @@ function getAngle (val) {
     return angleZero + val * 30;
 }
 
-async function updateStationLoop (loop) {
-    const status = await fetch(`/autorun/1/${loop}`);
-    console.log(await status.text());
+function zoneTemplate (id, defaultZone) {
+    var checked = id == 0 ? "checked" : "";
+    return `<label for="zone${id}">Zone ${id + 1}</label><input type="radio" name="zone" id="zone${id}" onclick="updateCurrentZone(this);" value="${id}" ${checked}></input>`;
+}
+
+async function updateCurrentZone (radio) {
+    controllingZone = radio.value;
+    const zone = await fetch(`/speed/${controllingZone}`);
+    const zoneSpeed = int(await zone.text());
+    speedVal = zoneSpeed;
+    setDisplaySpeed(null, zoneSpeed);
+}
+
+async function setZones () {
+    var numZones;
+    var defaultZone;
+
+    try {
+        const zones = await fetch(`/zoneinfo`);
+        var zoneInfo = (await zones.text()).split(",");
+        numZones = zoneInfo[0];
+        defaultZone = zoneInfo[1];
+    } catch {
+        var numZones = 2;
+        var defaultZone = 0;
+    }
+
+    for (let i = 0; i < numZones; i++) {
+        var span = document.createElement("span");
+        span.innerHTML = zoneTemplate(i, defaultZone);
+        zoneDiv.append(span);
+    }
 }

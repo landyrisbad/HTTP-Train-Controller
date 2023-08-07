@@ -1,6 +1,7 @@
 body {
     user-select: none;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    border-bottom: 5px solid black;
 }
 
 #speed-control {
@@ -9,10 +10,18 @@ body {
     display: inline-block;
 }
 
-#control-wrapper {
+.controller {
     border: 5px solid black;
-    padding: 5px;
     text-align: center;
+    border-bottom: none;
+}
+
+#control-wrapper {
+    padding: 5px;
+}
+
+#zone-control {
+    padding-bottom: 1px;
 }
 
 #direction-control {
@@ -109,8 +118,14 @@ body {
 }
 
 #set-manual {
-    text-align: center;
-    font-weight: bold;
-    border: 5px solid black;
-    border-bottom: none;
+    padding: 20px;
+}
+
+#zone-control span {
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+#zone-control {
+    padding: 20px;
 }
