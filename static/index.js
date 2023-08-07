@@ -199,8 +199,8 @@ async function setZones () {
     try {
         const zones = await fetch(`/zoneinfo`);
         var zoneInfo = (await zones.text()).split(",");
-        numZones = zoneInfo[0];
-        defaultZone = zoneInfo[1];
+        numZones = int(zoneInfo[0]);
+        defaultZone = int(zoneInfo[1]);
     } catch {
         var numZones = 2;
         var defaultZone = 0;
