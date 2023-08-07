@@ -19,7 +19,7 @@ setInterval(function () { document.activeElement.blur() }, 1);
 
 document.addEventListener("keydown", function (event) {
     if (isManual.checked) {
-        if (event.key == "ArrowDown") { 
+        if (event.key == "ArrowDown") {
             changeSpeed(null, -1);
         }
         else if (event.key == "ArrowUp") {
@@ -31,7 +31,7 @@ document.addEventListener("keydown", function (event) {
         else if (event.key == "ArrowLeft") {
             setDirection(false);
         }
-    }   
+    }
     if (event.key == " ") {
         eSTOP();
     }
@@ -60,10 +60,10 @@ function calcDialAngle (event) {
     var long2 = toRadians(event.clientY);
 
     var dialBoundingBox = document.getElementById("knob").getBoundingClientRect();
-    var lat1 = toRadians(dialBoundingBox.x + dialBoundingBox.width / 2) 
+    var lat1 = toRadians(dialBoundingBox.x + dialBoundingBox.width / 2)
     var long1 = toRadians(dialBoundingBox.y);
     console.log(dialBoundingBox.x + dialBoundingBox.width / 2, dialBoundingBox.y);
-    console.log(lat2, long2); 
+    console.log(lat2, long2);
 
     var angle = Math.atan2(
         Math.sin(long2 - long1) * Math.cos(lat2),
@@ -155,11 +155,14 @@ async function setDirection(val) {
 }
 
 async function changeSpeed (event, setValue = 0) {
-    if (event != null) {
+    if (event == "set") {
+        speedVal = setValue;
+    }
+    else if (event != null) {
         speedVal += event.currentTarget.speedChangeVal;
     }
     else {
-        speedVal += setValue;   
+        speedVal += setValue;
     }
     if (speedVal < 0) {
         speedVal = 0;
@@ -173,7 +176,7 @@ async function changeSpeed (event, setValue = 0) {
 
     const changeSpeed = await fetch(`/speed/${controllingZone}/${speedVal}`);
     console.log(await changeSpeed.text());
-} 
+}
 
 function getAngle (val) {
     return angleZero + val * 30;
@@ -187,9 +190,9 @@ function zoneTemplate (id, defaultZone) {
 async function updateCurrentZone (radio) {
     controllingZone = radio.value;
     const zone = await fetch(`/speed/${controllingZone}`);
-    const zoneSpeed = int(await zone.text());
+    const zoneSpeed = parseInt(await zone.text()) / 10;
     speedVal = zoneSpeed;
-    setDisplaySpeed(null, zoneSpeed);
+    changeSpeed("set", zoneSpeed);
 }
 
 async function setZones () {
@@ -199,9 +202,10 @@ async function setZones () {
     try {
         const zones = await fetch(`/zoneinfo`);
         var zoneInfo = (await zones.text()).split(",");
-        numZones = int(zoneInfo[0]);
-        defaultZone = int(zoneInfo[1]);
+        numZones = parseInt(zoneInfo[0]);
+        defaultZone = parseInt(zoneInfo[1]);
     } catch {
+        console.log("fetch zoneinfo failed, defaulting to 2 zones");
         var numZones = 2;
         var defaultZone = 0;
     }
